@@ -1,0 +1,47 @@
+@server = http://localhost:3000
+
+### 1. 게시글 1 생성
+POST {{server}}/blog
+Content-Type: application/json
+
+{
+  "title": "1번 글",
+  "content": "1번 글 내용",
+  "name": "작성자1"
+}
+
+### 2. 게시글 2 생성
+POST {{server}}/blog
+Content-Type: application/json
+
+{
+  "title": "2번 글",
+  "content": "2번 글 내용",
+  "name": "작성자2"
+}
+
+### 3. 게시글 3 생성
+POST {{server}}/blog
+Content-Type: application/json
+
+{
+  "title": "3번 글",
+  "content": "3번 글 내용",
+  "name": "작성자3"
+}
+
+### 4. 2번 글 삭제
+DELETE {{server}}/blog/2
+
+### 5. 3번 글 수정
+PUT {{server}}/blog/3
+Content-Type: application/json
+
+{
+  "title": "3번 글 수정",
+  "content": "수정된 내용",
+  "name": "작성자3"
+}
+
+### 6. 전체 게시글 확인
+GET {{server}}/blog

@@ -1,0 +1,50 @@
+<style>
+    .message {
+        width: 300px;
+        color: #fff;
+        background-color: purple;
+        margin-top: 5px;
+        padding: 5px;
+    }
+</style>
+
+<body>
+    <textarea id="message" cols="50" rows="5"></textarea>
+    <br />
+
+    <button onclick="sendMessage()">전송</button>
+    <button onclick="webSocketClose()">종료</button>
+    <div id="messages"></div>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:3000');
+
+        function sendMessage() {
+            ws.send(document.getElementById('message').value);
+        }
+
+        function webSocketClose() {
+            console.log("종료 누름");
+            ws.close();
+        }
+
+        ws.onopen = function() {
+            console.log("클라이언트 접속 완료!");
+        };
+
+        ws.onmessage = function(event) {
+            let message = event.data.replace(/(\r\n|\n|\r)/g, "<br />");
+            let messageDiv = document.createElement('div');
+            messageDiv.innerHTML = message;
+            messageDiv.className = 'message';
+            document.getElementById('messages').append(messageDiv);
+        };
+
+        ws.onclose = function(e) {
+            console.log('종료');
+            const notice = document.createElement('div');
+            notice.textContent = "서버 접속 종료";
+            document.getElementById('messages').append(notice);
+        };
+    </script>
+</body>

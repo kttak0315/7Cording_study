@@ -1,0 +1,55 @@
+### 회원 가입
+
+POST http://localhost:3000/auth/register
+content-type: application/json
+{
+    "email" : "andy1@podo.com",
+    "password" : "1234",
+}
+
+
+
+### 로그인 2 : LoginGuard
+POST http://localhost:3000/auth/login2
+content-type: application/json
+
+{
+    "email" : "andy1@podo.com",
+    "password" : "1234",
+}
+
+### Guard 테스트
+GET http://localhost:3000/auth/test-guard
+
+### 로그인 3 : 세션을 사용하는 테스트
+POST http://localhost:3000/auth/login3
+content-type: application/application/json
+{
+    "email" : "andy1@podo.com",
+    "password" : "1234"
+}
+
+### 로그인 3 : 틀린 패스워드로 테스트
+Post http://localhost:3000/auth/login3
+content-type: application/json
+
+{
+    "email" : "andy1@podo.com",
+    "password" : "12345"
+}
+
+### 인증이 성공 하는지 테스트
+GET http://localhost:3000/auth/test-guard2
+import { AuthenticatedGuard, LocalAuthGuard, LoginGuard } from './auth.guard';
+
+@UseGuards(LocalAuthGuard)
+@Post('login3')
+login3(@Request() req) {
+    return req.user;
+}
+
+@UserGuards(AuthenticatedGuard)
+@Get('test-guard2')
+testGuardWithSession(@Request() req) {
+    return req.user;
+}
